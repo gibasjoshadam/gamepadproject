@@ -68,7 +68,16 @@ static const uint8_t hid_report_descriptor[] = {
     0x95, 0x01,    //     ReportCount(1)
     0x75, 0x06,    //     ReportSize(6)
     0x81, 0x03,    //     Input(Constant, Variable, Absolute, NoWrap, Linear, PreferredState, NoNullPosition, BitField)
-    0xC0           // EndCollection()
+    0x05, 0x0A,    //     UsagePage(Ordinal[0x000A])
+    0x19, 0x01,    //     UsageIdMin(Instance 1[0x0001])
+    0x29, 0x02,    //     UsageIdMax(Instance 2[0x0002])
+    0x95, 0x02,    //     ReportCount(2)
+    0x75, 0x01,    //     ReportSize(1)
+    0xB1, 0x02,    //     Feature(Data, Variable, Absolute, NoWrap, Linear, PreferredState, NoNullPosition, NonVolatile, BitField)
+    0x95, 0x01,    //     ReportCount(1)
+    0x75, 0x06,    //     ReportSize(6)
+    0xB1, 0x03,    //     Feature(Constant, Variable, Absolute, NoWrap, Linear, PreferredState, NoNullPosition, NonVolatile, BitField)
+    0xC0,          // EndCollection()
 };
 
 static const char *hid_string_descriptor[5] = {
@@ -122,6 +131,21 @@ uint16_t tud_hid_get_report_cb(uint8_t instance, uint8_t report_id, hid_report_t
 
 void tud_hid_set_report_cb(uint8_t instance, uint8_t report_id, hid_report_type_t report_type, uint8_t const *buffer, uint16_t bufsize)
 {
+    printf("RAW USB DATA: ID=%d, Type=%d, Len=%d, Data[0]=%d\n", 
+            report_id, report_type, bufsize, buffer[0]);
+
+    ESP_LOGI("HID_DEBUG", "Received ID: %d, Type: %d, Size: %d", report_id, report_type, bufsize);
+
+    if (report_type == HID_REPORT_TYPE_FEATURE && report_id == 1) 
+    {
+        uint8_t gear_state = buffer[0]; 
+        
+        if (gear_state == 1) {
+            ESP_LOGI("GEAR", "X-Plane: Gear is DOWN");
+        } else {
+            ESP_LOGI("GEAR", "X-Plane: Gear is UP");
+        }
+    }
 }
 
 

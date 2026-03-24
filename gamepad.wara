@@ -1,0 +1,13 @@
+[[applicationCollection]]
+usage = ['Vendo', 'Gamepad']
+
+    [[applicationCollection.inputReport]]
+	
+        [[applicationCollection.inputReport.variableItem]]
+        usageRange = ['Button', 'Button 1', 'Button 10']
+        logicalValueRange = [0, 1]
+
+    [[applicationCollection.featureReport]]
+        [[applicationCollection.featureReport.variableItem]]
+        usageRange = ['Vendor Usage 2']
+        logicalValueRange = [0, 255]

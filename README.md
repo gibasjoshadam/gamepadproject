@@ -22,3 +22,6 @@ The purpose is to recreate (mainly avionics) the A330 cockpit. I could build it 
 - used mapping/dictionary for commands/datarefs
 - i learned more about bitwise AND/XOR operation + left/right shifts
 - problem about the websocket connection dying when sending commands too fast even with debounce
+
+2026 3 30
+- temporarily created matrixkb.c to experiment on a matrix key input
